@@ -49,25 +49,25 @@
             
         }
 
-        //add rooms
-        protected function add_room($category, $room){
-            //check if room exists
-            $check_room = $this->connectdb()->prepare("SELECT * FROM rooms WHERE category = :category AND room = :room");
-            $check_room->bindValue("category", $category);
-            $check_room->bindValue("room", $room);
-            $check_room->execute();
-            if(!$check_room->rowCount() > 0){
-                $add_room = $this->connectdb()->prepare("INSERT INTO rooms (category, room) VALUES (:category, :room)");
-                $add_room->bindValue("category", $category);
-                $add_room->bindValue("room", $room);
-                $add_room->execute();
-                if($add_room){
-                    echo "<p><span>$room</span> added successfully!</p>";
+        //add rooms with 2 columns
+        protected function add_items($table, $column1, $column2, $value1, $value2){
+            //check if item exists
+            $check_item = $this->connectdb()->prepare("SELECT * FROM $table WHERE $column1 = :$column2 AND $column2 = :$column2");
+            $check_item->bindValue("$column1", $value1);
+            $check_item->bindValue("$column2", $value2);
+            $check_item->execute();
+            if(!$check_item->rowCount() > 0){
+                $add_item = $this->connectdb()->prepare("INSERT INTO $table ($column1, $column2) VALUES (:$column1, :$column2)");
+                $add_item->bindValue("$column1", $value1);
+                $add_item->bindValue("$column2", $value2);
+                $add_item->execute();
+                if($add_item){
+                    echo "<p><span>$value1</span> added successfully!</p>";
                 }else{
-                    echo "<p class='exist'><span>$room</span> could not be created!</p>";
+                    echo "<p class='exist'><span>$value1</span> could not be created!</p>";
                 }
             }else{
-                echo "<p class='exist'><span>$room</span> already exists!</p>";
+                echo "<p class='exist'><span>$value1</span> already exists!</p>";
             }
             
         }
@@ -98,7 +98,15 @@
                 $check_in->bindvalue("posted_by",$posted);
                 $check_in->execute();
                 if($check_in){
-                    echo "<p><span>$last_name $first_name</span> Posted successfully</p>";
+                    // update room status
+                    $update_room = $this->connectdb()->prepare("UPDATE rooms SET room_status = 1 WHERE room_id = :room_id");
+                    $update_room->bindValue("room_status", $room);
+                    $update_room->execute();
+                    if($update_room){
+                        echo "<p><span>$last_name $first_name</span> Posted successfully</p>";
+                    }else{
+                        echo "<p><span>Room status not updated</p>";
+                    }
                 }else{
                     echo "<p><span>$last_name $first_name</span> could not check in</p>";
                 }
@@ -126,14 +134,14 @@
                 $update_status->bindValue("amount_due", $new_balance);
                 $update_status->bindValue("guest_id", $guest);
                 $update_status->execute();
-                if($update_status){
+                /* if($update_status){
                     $_SESSION['success'] = "<p>Payment was successful! <i class='fas fa-thumbs-up'></i></p>";
                     // echo "<p>Payment was successful! <i class='fas fa-thumbs-up'></i></p>";
-                    header("Location:../view/users.php");
+                    // header("Location:../view/users.php");
                 }else{
                     echo "<p>Status update was not successful! <i class='fas fa-thumbs-down'></i></p>";
 
-                }
+                } */
 
             }else{
                 echo "<p class='exist'><span>Failed to insert payment</p>";
@@ -178,18 +186,24 @@
         }
     }
 
-    //add room controller
-    class add_room extends inserts{
-        private $category;
-        private $room;
+    //add items controller
+    class add_items extends inserts{
+        private $table;
+        private $column1;
+        private $column2;
+        private $value1;
+        private $value2;
 
-        public function __construct($category, $room)
+        public function __construct($table, $column1, $column2, $value1, $value2)
         {
-            $this->category = $category;
-            $this->room = $room;
+            $this->table = $table;
+            $this->column1 = $column1;
+            $this->column2 = $column2;
+            $this->value1 = $value1;
+            $this->value2 = $value2;
         }
-        public function create_room(){
-            $this->add_room($this->category, $this->room);
+        public function create_item(){
+            $this->add_items($this->table, $this->column1, $this->column2, $this->value1, $this->value2);
         }
     }
 

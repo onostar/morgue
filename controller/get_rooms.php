@@ -7,7 +7,7 @@
     include "../classes/select.php";
 
     $get_room = new selects();
-    $rows = $get_room->fetch_details_cond('rooms', 'category', $category);
+    $rows = $get_room->fetch_details_2cond('rooms', 'category', 'room_status', $category, 0);
 ?>
     <option value=""selected>Select a room</option>
 <?php

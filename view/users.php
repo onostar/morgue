@@ -15,6 +15,9 @@
             $user_id = $user->user_id;
         }
         $_SESSION['user_id'] = $user_id;
+
+        
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +73,14 @@
                         unset($_SESSION['success']);
                     }
                 ?>
+                <?php
+                    if(isset($_SESSION['error'])){
+                        echo "<div class='error'>".
+                            $_SESSION['error'].
+                        "</div>";
+                        unset($_SESSION['error']);
+                    }
+                ?>
             </section>
         </div>
     </main>
@@ -81,6 +92,9 @@
         
             setTimeout(function(){
                 $(".success").hide();
+            }, 4000);
+            setTimeout(function(){
+                $(".error").hide();
             }, 4000);
     </script>
 </body>

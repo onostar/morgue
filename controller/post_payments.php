@@ -19,3 +19,7 @@
     $post_payment = new payments($posted_by, $guest, $mode, $bank, $sender, $amount_due, $amount_paid, $invoice);
 
     $post_payment->payment();
+    if($post_payment){
+        echo "<div class='success'><p>Payment posted successfully! <i class='fas fa-thumbs-up'></i></p></div>";
+    }
+    

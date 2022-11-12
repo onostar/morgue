@@ -6,9 +6,7 @@
     if(isset($_SESSION['user_id'])){
         $user_id = $_SESSION['user_id'];
         // echo $user_id;
-    }else{
-        echo "no session";
-    }
+    
     if(isset($_GET['guest_id'])){
         $guest = $_GET['guest_id'];
         $get_user = new selects();
@@ -17,7 +15,7 @@
 ?>
 <div id="post_payment" class="displays all_details">
     <!-- <div class="info"></div> -->
-    <button class="page_navs" id="back" onclick="showPage(8, 'guest_payment.php')"><i class="fas fa-angle-double-left"></i> Back</button>
+    <button class="page_navs" id="back" onclick="showPage('other_payment.php')"><i class="fas fa-angle-double-left"></i> Back</button>
     <h2>Payment Details</h2>
     <div class="guest_name">
         <h4>
@@ -96,7 +94,7 @@
             <!-- cash payment form -->
             <div class="add_user_form payment_form" id="cash" style="width:100%">
                 <h3 style="text-align:left; background:var(--moreColor)">Post Cash payment for <?php echo $detail->last_name. " ". $detail->first_name?></h3>
-                <form class="addUserForm" method="POST" action="../controller/post_payments.php">
+                <section class="addUserForm" >
                     <div class="inputs">
                         <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
                         <input type="hidden" name="guest" id="guest" value="<?php echo $detail->guest_id?>">
@@ -113,16 +111,16 @@
                         </div>
                     </div>
                     <div class="inputs" style="justify-content:unset">
-                        <button type="submit" id="payment" name="payment" >Post <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
 
                     </div>
-                </form>    
+                </section>    
             </div>
             <!-- POS payment form -->
             <div class="info"></div>
             <div class="add_user_form payment_form" id="pos" style="width:100%">
                 <h3 style="text-align:left; background:var(--moreColor)">Post POS payment for <?php echo $detail->last_name. " ". $detail->first_name?></h3>
-                <form class="addUserForm" method="POST" action="../controller/post_payments.php">
+                <section class="addUserForm">
                     <div class="inputs">
                         <input type="hidden" name="guest" id="guest" value="<?php echo $guest?>">
                         <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
@@ -137,7 +135,7 @@
                                     $rows = $get_bank->fetch_details('banks');
                                     foreach($rows as $row):
                                 ?>
-                                <option value="<?php echo $row->bank_id?>"><?php echo $row->bank?></option>
+                                <option value="<?php echo $row->bank_id?>"><?php echo $row->bank." (".$row->account_number.")"?></option>
                                 <?php endforeach?>
                             </select>
                         </div>
@@ -151,15 +149,15 @@
                         </div>
                     </div>
                     <div class="inputs" style="justify-content:unset">
-                        <button type="submit" id="payment" name="payment">Post <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
 
                     </div>
-                </form>    
+                </section>    
             </div>
             <!-- transfer payment form -->
             <div class="add_user_form payment_form" id="transfer" style="width:100%">
                 <h3 style="text-align:left; background:var(--moreColor)">Post Transfer payment for <?php echo $detail->last_name. " ". $detail->first_name?></h3>
-                <form class="addUserForm" method="POST" action="../controller/post_payments.php">
+                <section class="addUserForm">
                     <div class="inputs">
                         <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
                         <input type="hidden" name="guest" id="guest" value="<?php echo $guest?>">
@@ -173,7 +171,7 @@
                                     $rows = $get_bank->fetch_details('banks');
                                     foreach($rows as $row):
                                 ?>
-                                <option value="<?php echo $row->bank_id?>"><?php echo $row->bank?></option>
+                                <option value="<?php echo $row->bank_id?>"><?php echo $row->bank." (".$row->account_number.")"?></option>
                                 <?php endforeach?>
                             </select>
                         </div>
@@ -190,10 +188,10 @@
                             <input type="number" name="amount_paid" id="amount_paid" placeholder="₦50,000" required>
                         </div>
                         <div class="data">
-                            <button type="submit" id="payment" name="payment">Post <i class="fas fa-paper-plane"></i></button>
+                            <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
-                </form>    
+                </section>    
             </div>
             <?php
                 if(gettype($details) == "string"){
@@ -205,8 +203,10 @@
     
 </div>
 <?php
+            }
         }
+    }else{
+        header("Location: ../index.php");
     }
 ?>
-
 </div>

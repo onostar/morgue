@@ -28,6 +28,32 @@
                 return $rows;
             }
         }
+        //fetch with two condition
+        public function fetch_details_2cond($table, $condition1, $condition2, $value1, $value2){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND $condition2 = :$condition2");
+            $get_user->bindValue("$condition1", $value1);
+            $get_user->bindValue("$condition2", $value2);
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                $rows = $get_user->fetchAll();
+                return $rows;
+            }else{
+                $rows = "No records found";
+                return $rows;
+            }
+        }
+        //fetch between two dates
+        public function fetch_details_date($table, $condition1, $value1, $value2){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 BETWEEN '$value1' AND '$value2'");
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                $rows = $get_user->fetchAll();
+                return $rows;
+            }else{
+                $rows = "No records found";
+                return $rows;
+            }
+        }
         //fetch details with negative condition
         public function fetch_details_negCond($table, $column, $condition){
             $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $column != :$column");
@@ -44,6 +70,20 @@
         //fetch details with date condition
         public function fetch_details_dateCond($table, $condition1, $value1){
             $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND check_out_date = CURDATE() OR check_out_date < CURDATE()");
+            $get_user->bindValue("$condition1", $value1);
+            // $get_user->bindValue("$condition2", $value2);
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                $rows = $get_user->fetchAll();
+                return $rows;
+            }else{
+                $rows = "No records found";
+                return $rows;
+            }
+        }
+        // fetch todays check in
+        public function fetch_checkIn($table, $condition1, $value1){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND check_in_date = CURDATE()");
             $get_user->bindValue("$condition1", $value1);
             // $get_user->bindValue("$condition2", $value2);
             $get_user->execute();

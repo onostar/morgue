@@ -5,9 +5,7 @@
     if(isset($_SESSION['user_id'])){
         $user_id = $_SESSION['user_id'];
         // echo $user_id;
-    }else{
-        echo "no session";
-    }
+    
 ?>
 
 <div id="check_in" class="displays">
@@ -15,7 +13,7 @@
     <div class="add_user_form">
         <h3>Check in a corpse</h3>
         <!-- <form method="POST" id="addUserForm"> -->
-        <form class="addUserForm">
+        <section class="addUserForm">
             <div class="inputs">
                 <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
                 <div class="data" style="width:49%">
@@ -128,6 +126,12 @@
                 </div>
                 
             </div>
-        </form>    
+        </section>    
     </div>
 </div>
+<?php
+    }else{
+        header("Location: ../index.php");
+
+    }
+?>

@@ -1036,7 +1036,7 @@ main hr{
     text-transform: capitalize;
     font-family: "Pacifico";
     font-size:1.4rem!important;
-    margin:5px 0;
+    margin:15px 0;
 }
 
 .payment_mode a{
@@ -1126,8 +1126,8 @@ main hr{
     width:100%;
     height:100%;
     align-items:center;
-    /* overflow-y: scroll; */
-    /* scrollbar-width: none; */
+    overflow-y: scroll;
+    scrollbar-width: none;
     scroll-behavior: smooth;
 }
 .navs{
@@ -1473,12 +1473,12 @@ main hr{
     color:red;
     font-weight: bold;
 }
-.add_user_form form{
+.add_user_form form, .add_user_form section{
     width:90%;
     margin:auto;
     padding:10px;
 }
-.add_user_form form .inputs{
+.add_user_form form .inputs, .add_user_form section .inputs{
     width:100%;
     display:flex;
     flex-wrap: wrap;
@@ -1493,10 +1493,10 @@ main hr{
     border:none;
     /* color:red; */
 }
-.add_user_form form .inputs .data{
+.add_user_form form .inputs .data, .add_user_form section .inputs .data{
     width:47%;
 }
-#check_in .add_user_form form .inputs .data{
+#check_in .add_user_form form .inputs .data, #check_in .add_user_form section .inputs .data{
     width:32%;
 }
 .add_user_form form .inputs .data label{
@@ -1878,7 +1878,7 @@ main hr{
 }
 .select_date{
     width:50%;
-    margin:10px 0 0;
+    margin:10px 0 20px;
 }
 #vehicleRevenue .select_date, #vehicleExpense .select_date{
     width:70%;
@@ -1889,11 +1889,11 @@ main hr{
     display:flex;
     gap:.2rem;
     flex-wrap:wrap;
-    align-items: center;
+    align-items: flex-end;
 }
 .select_date section .from_to_date{
-    margin:5px 0;
-    width:48%;
+    margin:0;
+    width:32%;
 }
 #vehicleRevenue .select_date section .from_to_date, #vehicleExpense .select_date section .from_to_date{
     width:30%;
@@ -2398,7 +2398,7 @@ main hr{
 .allResults table tbody tr .prices{
     position:relative;
 }
-.allResults table tbody tr .prices form{
+.allResults table tbody tr .prices section{
     position:absolute;
     top:0;
     background:var(--primaryColor);
@@ -2413,32 +2413,34 @@ main hr{
 }
 @keyframes showForm{
     100%{
-        top:-100%;
+        top:-10%;
     }
 }
-.allResults table tbody tr .prices form input{
+.allResults table tbody tr .prices section input{
     padding:5px;
     background:#fff;
     border:1px solid rgb(63, 62, 62);
     border-radius:5px;
-    width:50%;
+    width:40%;
 }
-.allResults table tbody tr .prices form button{
+.allResults table tbody tr .prices section button{
     background:green;
     border-radius:5px;
-    margin:5px;
+    margin:1px;
+    padding:5px;
 }
-.allResults table tbody tr .prices form button:last-child{
+.allResults table tbody tr .prices section button:last-child{
     background:red; 
 }
 .closeForm{
     background:red;
 }
-.allResults table tbody tr .prices form a{
+.allResults table tbody tr .prices section a{
     background:transparent; 
     /* font-size:1.8rem; */
     color:#fff;
     margin:0;
+    padding:2px;
     
 }
 .allResults table tbody tr td:first-child{

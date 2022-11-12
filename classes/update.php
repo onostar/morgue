@@ -6,11 +6,26 @@
             $update->bindValue("$column", $value);
             $update->bindValue("$condition", $condition_value);
             $update->execute();
-            if($update){
+            /* if($update){
                 echo "<div class='info'><p>Updated successfully! <i class='fas fa-check'></i></p></div>";
             }else{
                 echo "<div class='info'><p class='exist'>Update failed! <i class='fas fa-ban'></i></p></div>";
-            }
+            } */
+        }
+        public function update_multiple($table, $column1, $value1, $column2, $value2, $column3, $value3, $column4, $value4, $column5, $value5, $condition, $condition_value){
+            $update = $this->connectdb()->prepare("UPDATE $table SET $column1 = :$column1, $column2 = :$column2, $column3 = :$column3, $column4 = :$column4, $column5 = :$column5 WHERE $condition = :$condition");
+            $update->bindValue("$column1", $value1);
+            $update->bindValue("$column2", $value2);
+            $update->bindValue("$column3", $value3);
+            $update->bindValue("$column4", $value4);
+            $update->bindValue("$column5", $value5);
+            $update->bindValue("$condition", $condition_value);
+            $update->execute();
+            /* if($update){
+                echo "<div class='info'><p>Updated successfully! <i class='fas fa-check'></i></p></div>";
+            }else{
+                echo "<div class='info'><p class='exist'>Update failed! <i class='fas fa-ban'></i></p></div>";
+            } */
         }
     }
 

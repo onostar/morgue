@@ -56,7 +56,7 @@
                     ?>
                 </td>
                 <td><?php echo date("jS M, Y", strtotime($detail->check_in_date));?></td>
-                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage(12, 'guest_details.php?guest_id=<?php echo $detail->guest_id?>')">Details</a></span></td>
+                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage('guest_details.php?guest_id=<?php echo $detail->guest_id?>')">Details</a></span></td>
                 
             </tr>
             <?php $n++; endforeach;}?>

@@ -58,7 +58,7 @@
                     ?>
                 </td>
                 <td style="color:var(--secondaryColor);"><?php echo "₦".number_format($detail->amount_due, 2)?></td>
-                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage(10, 'post_payment.php?guest_id=<?php echo $detail->guest_id?>')">Details</a></span></td>
+                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage('post_payment.php?guest_id=<?php echo $detail->guest_id?>')">Details</a></span></td>
             </tr>
             
             <?php $n++; endforeach;}?>

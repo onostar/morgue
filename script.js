@@ -69,7 +69,7 @@ function showTransfer(){
      $("#transfer").show();
 }
 //show pages dynamically with xhttp request
-function showPage(id, page){
+function showPage(page){
      let xhr = false;
      if(window.XMLHttpRequest){
           xhr = new XMLHttpRequest();
@@ -82,7 +82,7 @@ function showPage(id, page){
                     document.getElementById("contents").innerHTML = xhr.responseText;
                }
           }
-          xhr.open("GET", page+"?id="+id, true );
+          xhr.open("GET", page, true );
           xhr.send(null);
      }
 }
@@ -146,6 +146,33 @@ function addCategory(){
      }
      $("#category").val('');
      $("#category").focus();
+     return false;
+}
+//add bank
+function addBank(){
+     let bank = document.getElementById("bank").value;
+     let account_num = document.getElementById("account_num").value;
+     if(bank.length == 0 || bank.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input bank name!");
+          $("#bank").focus();
+          return;
+     }else if(account_num.length == 0 || account_num.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input account number!");
+          $("#account_num").focus();
+          return;
+     }else{
+          $.ajax({
+               type : "POST",
+               url : "../controller/add_bank.php",
+               data : {bank:bank, account_num:account_num},
+               success : function(response){
+               $(".info").html(response);
+               }
+          })
+     }
+     $("#bank").val('');
+     $("#account_num").val('');
+     $("#bank").focus();
      return false;
 }
 //search for data within table
@@ -333,14 +360,14 @@ function checkIn(){
           alert("Please Input Check out date");
           $("#check_out_date").focus();
           return;
-     // }else if((new Date(check_in_date )).getTime() < today.getTime()){
-     //      alert("Check in date cannot be lesser than todays date");
-     //      $("#check_in_date").focus();
-     //      return;
-     // }else if((new Date(check_in_date )).getTime() > (new Date(check_out_date)).getTime()){
-     //      alert("Check in date cannot be greater than check out date");
-     //      $("#check_in_date").focus();
-     //      return;
+     }else if((new Date(check_in_date )).getTime() < today.getTime()){
+          alert("Check in date cannot be lesser than todays date");
+          $("#check_in_date").focus();
+          return;
+     }else if((new Date(check_in_date )).getTime() > (new Date(check_out_date)).getTime()){
+          alert("Check in date cannot be greater than check out date");
+          $("#check_in_date").focus();
+          return;
      }else if(amount_due.length == 0 || amount_due.replace(/^\s+|\s+$/g, "").length == 0){
           alert("Please select room to display amount");
           $("#check_in_room").focus();
@@ -385,7 +412,7 @@ function calculateDays(){
      // alert(totalDays);
 }
 
-//post payment
+//post guest payment
 function postPayment(){
      let posted_by = document.getElementById("posted_by").value;
      let guest = document.getElementById("guest").value;
@@ -395,7 +422,7 @@ function postPayment(){
      let guest_amount = document.getElementById("guest_amount").value;
      let amount_paid = document.getElementById("amount_paid").value;
      
-     /* if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
           alert("Please input amount paid!");
           $("#amount_paid").focus();
           return;
@@ -403,7 +430,7 @@ function postPayment(){
      //      alert("Insufficient funds!");
      //      $("#guest_amount").focus();
      //      return;
-     }else{ */
+     }else{
      $.ajax({
           type : "POST",
           url : "../controller/post_payments.php",
@@ -412,10 +439,44 @@ function postPayment(){
                $("#all_payments").html(response);
           }
      })
-          // setTimeout(function(){
-          //      $('#all_payments').load("post_payment.php #all_payments");
-          // }, 3000);
-     // }
+          setTimeout(function(){
+               $('#all_payments').load("post_payment.php?guest_id=+"+guest + "#all_payments");
+          }, 3000);
+     }
+     return false;    
+
+}
+//post other payments for guest
+function postOtherPayment(){
+     let posted_by = document.getElementById("posted_by").value;
+     let guest = document.getElementById("guest").value;
+     let payment_mode = document.getElementById("payment_mode").value;
+     let bank_paid = document.getElementById("bank_paid").value;
+     let sender = document.getElementById("sender").value;
+     let guest_amount = document.getElementById("guest_amount").value;
+     let amount_paid = document.getElementById("amount_paid").value;
+     
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input amount paid!");
+          $("#amount_paid").focus();
+          return;
+     // }else if(parseInt(amount_paid) < parseInt(guest_amount)){
+     //      alert("Insufficient funds!");
+     //      $("#guest_amount").focus();
+     //      return;
+     }else{
+     $.ajax({
+          type : "POST",
+          url : "../controller/post_payments.php",
+          data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
+          success : function(response){
+               $("#guest_details").html(response);
+          }
+     })
+          setTimeout(function(){
+               $('#guest_details').load("guest_details.php?guest_id=+"+guest + "#guest_details");
+          }, 3000);
+     }
      return false;    
 
 }
@@ -427,4 +488,64 @@ function checkOut(guest){
           // alert(user_id);
           window.open("../controller/check_out.php?guest="+guest, "_parent");
      }
+}
+
+//display change price form
+function displayPriceForm(form){
+     document.querySelectorAll(".priceForm").forEach(forms=>{
+         forms.style.display = "none";
+     })
+     document.querySelector(`#${form}`).style.display = "flex";
+ 
+ }
+ 
+ //close price form
+ function closeForm(){
+     $(".closeForm").click(function(){
+         $(".priceForm").hide();
+     })
+ }
+
+ //change price
+ function changePrice(){
+     let category_id = document.getElementById("category_id").value;
+     let price = document.getElementById("price").value;
+
+     $.ajax({
+          type : "POST",
+          url : "../controller/edit_price.php",
+          data: {category_id:category_id, price:price},
+          success : function(response){
+               $("#edit_price").html(response);
+          }
+     })
+     setTimeout(function(){
+          $("#edit_price").load("edit_price.php #edit_price");
+     }, 3000);
+     return false;
+ }
+//  search checkIns 
+function searchCheckIns(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_checkins.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
 }

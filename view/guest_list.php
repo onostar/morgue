@@ -10,7 +10,7 @@
 ?>
     <div class="info"></div>
 <div class="displays allResults" id="guest_payment">
-    <h2>Post New Guest payment</h2>
+    <h2>Current Checked in Guests</h2>
     <hr>
     <div class="search">
         <input type="search" id="searchGuestPayment" placeholder="Enter keyword" onkeyup="searchData(this.value)">
@@ -22,7 +22,9 @@
                 <td>Full Name</td>
                 <td>Room Category</td>
                 <td>Room</td>
+                <td>Checked in</td>
                 <td>Contact Person</td>
+                <td>Phone Number</td>
                 <td></td>
             </tr>
         </thead>
@@ -30,7 +32,7 @@
             <?php
                 $n = 1;
                 $get_users = new selects();
-                $details = $get_users->fetch_details_cond('check_ins', 'status', 0);
+                $details = $get_users->fetch_details_cond('check_ins', 'status', 1);
                 if(gettype($details) === 'array'){
                 foreach($details as $detail):
             ?>
@@ -57,8 +59,10 @@
                         echo $rooms->room;
                     ?>
                 </td>
+                <td><?php echo date("jS M, Y", strtotime($detail->check_in_date))?></td>
                 <td><?php echo $detail->contact_person?></td>
-                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage('post_payment.php?guest_id=<?php echo $detail->guest_id?>')">Details</a></span></td>
+                <td><?php echo $detail->contact_phone?></td>
+                <td style="text-align:center"><span style="font-weight:bold; background:skyblue; border-radius:5px; text-align:Center; width:auto;padding:5px 10px;"><a href="javascript:void(0)" class="page_navs" title="View guest details" style="color:#fff" onclick="showPage('guest_details.php?guest_id=<?php echo $detail->guest_id?>')">View Bill</a></span></td>
             </tr>
             
             <?php $n++; endforeach;}?>
