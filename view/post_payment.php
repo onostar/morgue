@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="inputs" style="justify-content:unset">
-                        <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" id="payment" name="payment" onclick="postCash()">Post <i class="fas fa-paper-plane"></i></button>
 
                     </div>
                 </section>    
@@ -124,11 +124,11 @@
                     <div class="inputs">
                         <input type="hidden" name="guest" id="guest" value="<?php echo $guest?>">
                         <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
-                        <input type="hidden" name="payment_mode" id="payment_mode" value="pos">
+                        <input type="hidden" name="pos_mode" id="pos_mode" value="pos">
                         <input type="hidden" name="sender" id="sender" value="Self">
                         <div class="data">
                             <label for="bank">Bank</label>
-                            <select name="bank_paid" id="bank_paid" required>
+                            <select name="pos_bank_paid" id="pos_bank_paid" required>
                                 <option value=""selected>Select Bank</option>
                                 <?php
                                     $get_bank = new selects();
@@ -145,11 +145,11 @@
                         </div>
                         <div class="data">
                             <label for="amount_paid">Amount Paid</label>
-                            <input type="number" name="amount_paid" id="amount_paid" placeholder="₦50,000" required>
+                            <input type="number" name="pos_amount_paid" id="pos_amount_paid" placeholder="₦50,000" required>
                         </div>
                     </div>
                     <div class="inputs" style="justify-content:unset">
-                        <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" id="payment" name="payment" onclick="postPos()">Post <i class="fas fa-paper-plane"></i></button>
 
                     </div>
                 </section>    
@@ -161,10 +161,10 @@
                     <div class="inputs">
                         <input type="hidden" name="posted_by" id="posted_by" value="<?php echo $user_id?>">
                         <input type="hidden" name="guest" id="guest" value="<?php echo $guest?>">
-                        <input type="hidden" name="payment_mode" id="payment_mode" value="transfer">
+                        <input type="hidden" name="transfer_mode" id="transfer_mode" value="transfer">
                         <div class="data">
                             <label for="bank">Bank</label>
-                            <select name="bank_paid" id="bank_paid" required>
+                            <select name="transfer_bank_paid" id="transfer_bank_paid" required>
                                 <option value=""selected>Select Bank</option>
                                 <?php
                                     $get_bank = new selects();
@@ -177,7 +177,7 @@
                         </div>
                         <div class="data">
                             <label for="sender">Sender Name</label>
-                            <input type="text" name="sender" id="sender" placeholder="Jacob Murphy" required>
+                            <input type="text" name="transfer_sender" id="transfer_sender" placeholder="Jacob Murphy" required>
                         </div>
                         <div class="data">
                             <label for="guest_amount">Amount due</label>
@@ -185,10 +185,10 @@
                         </div>
                         <div class="data">
                             <label for="amount_paid">Amount Paid</label>
-                            <input type="number" name="amount_paid" id="amount_paid" placeholder="₦50,000" required>
+                            <input type="number" name="transfer_amount" id="transfer_amount" placeholder="₦50,000" required>
                         </div>
                         <div class="data">
-                            <button type="submit" id="payment" name="payment" onclick="postPayment()">Post <i class="fas fa-paper-plane"></i></button>
+                            <button type="submit" id="payment" name="payment" onclick="postTransfer()">Post <i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
                 </section>    

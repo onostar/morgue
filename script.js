@@ -40,7 +40,7 @@ function showMenu(menu){
      document.querySelectorAll(".subMenu").forEach(subMenu => {
           subMenu.style.display = "none";
      });
-     document.querySelector(`#${menu}`).style.display = "block";
+     $(`#${menu}`).toggle();
 }
 document.addEventListener("DOMContentLoaded", function(){
      document.querySelectorAll(".allMenus").forEach(menus =>{
@@ -360,7 +360,7 @@ function checkIn(){
           alert("Please Input Check out date");
           $("#check_out_date").focus();
           return;
-     }else if((new Date(check_in_date )).getTime() < today.getTime()){
+     }else if((new Date(check_in_date)).getTime() < today.getTime()){
           alert("Check in date cannot be lesser than todays date");
           $("#check_in_date").focus();
           return;
@@ -412,8 +412,8 @@ function calculateDays(){
      // alert(totalDays);
 }
 
-//post guest payment
-function postPayment(){
+//post guest cash payment
+function postCash(){
      let posted_by = document.getElementById("posted_by").value;
      let guest = document.getElementById("guest").value;
      let payment_mode = document.getElementById("payment_mode").value;
@@ -446,8 +446,80 @@ function postPayment(){
      return false;    
 
 }
-//post other payments for guest
-function postOtherPayment(){
+//post guest POS payment
+function postPos(){
+     let posted_by = document.getElementById("posted_by").value;
+     let guest = document.getElementById("guest").value;
+     let payment_mode = document.getElementById("pos_mode").value;
+     let bank_paid = document.getElementById("pos_bank_paid").value;
+     let sender = document.getElementById("sender").value;
+     let guest_amount = document.getElementById("guest_amount").value;
+     let amount_paid = document.getElementById("pos_amount_paid").value;
+     
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input amount paid!");
+          $("#pos_amount_paid").focus();
+          return;
+     }else if(bank_paid.length == 0 || bank_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select POS Bank!");
+          $("#pos_bank_paid").focus();
+          return;
+     }else{
+     $.ajax({
+          type : "POST",
+          url : "../controller/post_payments.php",
+          data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
+          success : function(response){
+               $("#all_payments").html(response);
+          }
+     })
+          setTimeout(function(){
+               $('#all_payments').load("post_payment.php?guest_id=+"+guest + "#all_payments");
+          }, 3000);
+     }
+     return false;    
+
+}
+//post guest Transfer payment
+function postTransfer(){
+     let posted_by = document.getElementById("posted_by").value;
+     let guest = document.getElementById("guest").value;
+     let payment_mode = document.getElementById("transfer_mode").value;
+     let bank_paid = document.getElementById("transfer_bank_paid").value;
+     let sender = document.getElementById("transfer_sender").value;
+     let guest_amount = document.getElementById("guest_amount").value;
+     let amount_paid = document.getElementById("transfer_amount").value;
+     
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input amount paid!");
+          $("#transfer_amount").focus();
+          return;
+     }else if(bank_paid.length == 0 || bank_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select Bank Transferred to!");
+          $("#transfer_bank_paid").focus();
+          return;
+     }else if(sender.length == 0 || sender.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please Input Name of sender!");
+          $("#transfer_sender").focus();
+          return;
+     }else{
+     $.ajax({
+          type : "POST",
+          url : "../controller/post_payments.php",
+          data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
+          success : function(response){
+               $("#all_payments").html(response);
+          }
+     })
+          setTimeout(function(){
+               $('#all_payments').load("post_payment.php?guest_id=+"+guest + "#all_payments");
+          }, 3000);
+     }
+     return false;    
+
+}
+//post other cash payments for guest
+function postOtherCash(){
      let posted_by = document.getElementById("posted_by").value;
      let guest = document.getElementById("guest").value;
      let payment_mode = document.getElementById("payment_mode").value;
@@ -480,14 +552,99 @@ function postOtherPayment(){
      return false;    
 
 }
+//post other Pos payments for guest
+function postOtherPos(){
+     let posted_by = document.getElementById("posted_by").value;
+     let guest = document.getElementById("guest").value;
+     let payment_mode = document.getElementById("pos_mode").value;
+     let bank_paid = document.getElementById("pos_bank_paid").value;
+     let sender = document.getElementById("sender").value;
+     let guest_amount = document.getElementById("guest_amount").value;
+     let amount_paid = document.getElementById("pos_amount_paid").value;
+     
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input amount paid!");
+          $("#pos_amount_paid").focus();
+          return;
+     }else if(bank_paid.length == 0 || bank_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select POS Bank!");
+          $("#pos_bank_paid").focus();
+          return;
+     }else{
+     $.ajax({
+          type : "POST",
+          url : "../controller/post_payments.php",
+          data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
+          success : function(response){
+               $("#guest_details").html(response);
+          }
+     })
+          setTimeout(function(){
+               $('#guest_details').load("guest_details.php?guest_id=+"+guest + "#guest_details");
+          }, 3000);
+     }
+     return false;    
+
+}
+//post other Transfer payments for guest
+function postOtherTransfer(){
+     let posted_by = document.getElementById("posted_by").value;
+     let guest = document.getElementById("guest").value;
+     let payment_mode = document.getElementById("transfer_mode").value;
+     let bank_paid = document.getElementById("transfer_bank_paid").value;
+     let sender = document.getElementById("transfer_sender").value;
+     let guest_amount = document.getElementById("guest_amount").value;
+     let amount_paid = document.getElementById("transfer_amount").value;
+     
+     if(amount_paid.length == 0 || amount_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please input amount paid!");
+          $("#transfer_amount").focus();
+          return;
+     }else if(bank_paid.length == 0 || bank_paid.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select Bank Transferred to!");
+          $("#transfer_bank_paid").focus();
+          return;
+     }else if(sender.length == 0 || sender.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please Input Name of sender!");
+          $("#transfer_sender").focus();
+          return;
+     }else{
+     $.ajax({
+          type : "POST",
+          url : "../controller/post_payments.php",
+          data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
+          success : function(response){
+               $("#guest_details").html(response);
+          }
+     })
+          setTimeout(function(){
+               $('#guest_details').load("guest_details.php?guest_id=+"+guest + "#guest_details");
+          }, 3000);
+     }
+     return false;    
+
+}
 
 //check out guest
-function checkOut(guest){
+function checkOut(){
      let checkout = confirm("Do you want to check out this guest?", "");
      if(checkout){
           // alert(user_id);
-          window.open("../controller/check_out.php?guest="+guest, "_parent");
+          let user_id = document.getElementById("user_id").value;
+          let guest_id = document.getElementById("guest_id").value;
+          $.ajax({
+               type : "POST",
+               url : "../controller/check_out.php",
+               data : {user_id:user_id, guest_id:guest_id},
+               success : function(response){
+                    $("#guest_details").html(response);
+               }
+          })
+          setTimeout(function(){
+               $("#guest_details").load("guest_details.php?guest_id="+guest_id+" #guest_details");
+          }, 3000);
      }
+     return false;
 }
 
 //display change price form
@@ -546,6 +703,150 @@ function searchCheckIns(){
                $(".new_data").html(response);
                }
           });
+     }
+     return false;
+}
+//  search checkOuts 
+function searchCheckOuts(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_checkouts.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
+}
+//  search revenue 
+function searchRevenue(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_revenue.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
+}
+// search cash
+function searchCash(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_cash.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
+}
+// search POS
+function searchPos(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_pos.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
+}
+// search transfer
+function searchTransfer(){
+     let from_date = document.getElementById('from_date').value;
+     let to_date = document.getElementById('to_date').value;
+     /* authentication */
+     if(from_date.length == 0 || from_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date!");
+          $("#from_date").focus();
+          return;
+     }else if(to_date.length == 0 || to_date.replace(/^\s+|\s+$/g, "").length == 0){
+          alert("Please select a date range!");
+          $("#to_date").focus();
+          return;
+     }else{
+          $.ajax({
+               type: "POST",
+               url: "../controller/search_transfer.php",
+               data: {from_date:from_date, to_date:to_date},
+               success: function(response){
+               $(".new_data").html(response);
+               }
+          });
+     }
+     return false;
+}
+//  Get room reports 
+function getRoomReports(room){
+     let room_id = room;
+     /* authentication */
+     if(room_id){
+          $.ajax({
+               type: "POST",
+               url: "../controller/room_reports.php",
+               data: {room_id:room_id},
+               success: function(response){
+                    $(".new_data").html(response);
+               }
+          });
+     }else{
+          alert("select a room!");
+          return;
      }
      return false;
 }

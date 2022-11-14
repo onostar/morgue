@@ -1,27 +1,17 @@
 <?php
 
+    $from = htmlspecialchars(stripslashes($_POST['from_date']));
+    $to = htmlspecialchars(stripslashes($_POST['to_date']));
+
+    // instantiate classes
     include "../classes/dbh.php";
     include "../classes/select.php";
 
-
+    $get_checkIns = new selects();
+    $details = $get_checkIns->fetch_details_date('check_ins', 'checked_out', $from, $to);
+    $n = 1;  
 ?>
-<div id="checkReport" class="displays management">
-    <div class="select_date">
-        <!-- <form method="POST"> -->
-        <section>    
-            <div class="from_to_date">
-                <label>Select From Date</label><br>
-                <input type="date" name="from_date" id="from_date"><br>
-            </div>
-            <div class="from_to_date">
-                <label>Select to Date</label><br>
-                <input type="date" name="to_date" id="to_date"><br>
-            </div>
-            <button type="submit" name="search_date" id="search_date" onclick="searchCheckIns()">Search <i class="fas fa-search"></i></button>
-</section>
-    </div>
-<div class="displays allResults new_data" id="check_in_report">
-    <h2>Check in Report for today</h2>
+<h2>Check out Report between '<?php echo date("jS M, Y", strtotime($from)) . "' and '" . date("jS M, Y", strtotime($to))?>'</h2>
     <hr>
     <div class="search">
         <input type="search" id="searchCheckout" placeholder="Enter keyword" onkeyup="searchData(this.value)">
@@ -33,20 +23,18 @@
                 <td>Full Name</td>
                 <td>Room Category</td>
                 <td>Room</td>
-                <td>Checked In</td>
-                <td>Checked in by</td>
+                <td>Checked out</td>
+                <td>Checked out by</td>
                 
             </tr>
         </thead>
         <tbody>
-            <?php
-                $n = 1;
-                $get_users = new selects();
-                $details = $get_users->fetch_checkIn('check_ins', 'status', 'check_in_date', 1);
-                if(gettype($details) === 'array'){
-                foreach($details as $detail):
-            ?>
-            <tr>
+<?php
+    if(gettype($details) === 'array'){
+    foreach($details as $detail){
+
+?>
+    <tr>
                 <td style="text-align:center; color:red;"><?php echo $n?></td>
                 <td><a style="color:green" href="javascript:void(0)" title="View guest details" onclick="showPage('guest_details.php?guest_id=<?php echo $detail->guest_id?>')"><?php echo $detail->last_name . " ". $detail->first_name;?></a></td>
                 <td>
@@ -74,22 +62,17 @@
                     <?php
                         //get posted by
                         $get_posted_by = new selects();
-                        $checkedin_by = $get_posted_by->fetch_details_group('users', 'full_name', 'user_id', $detail->posted_by);
-                        echo $checkedin_by->full_name;
+                        $checkedout_by = $get_posted_by->fetch_details_group('users', 'full_name', 'user_id', $detail->checked_out_by);
+                        echo $checkedout_by->full_name;
                     ?>
                 </td>
                 
             </tr>
-            <?php $n++; endforeach;}?>
+            <?php $n++; }?>
         </tbody>
     </table>
-    
-    <?php
-        if(gettype($details) == "string"){
-            echo "<p class='no_result'>'$details'</p>";
-        }
-    ?>
-</div>
-
-<script src="../jquery.js"></script>
-<script src="../script.js"></script>
+<?php
+    }else{
+        echo "<p class='no_result'>'$details'</p>";
+    }
+?>

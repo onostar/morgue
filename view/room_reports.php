@@ -5,23 +5,29 @@
 
 
 ?>
-<div id="checkReport" class="displays management">
+<div id="revenueReport" class="displays management">
     <div class="select_date">
         <!-- <form method="POST"> -->
         <section>    
             <div class="from_to_date">
-                <label>Select From Date</label><br>
-                <input type="date" name="from_date" id="from_date"><br>
+                <label>Select a room</label><br>
+                <select name="room" id="room" onchange="getRoomReports(this.value)">
+                    <option value=""selected>Select room</option>
+                    <?php
+                        $get_rooms = new selects();
+                        $rows = $get_rooms->fetch_details('rooms');
+                        foreach($rows as $row){
+
+                    ?>
+                    <option value="<?php echo $row->room_id?>"><?php echo $row->room?></option>
+                    <?php }?>
+                </select>
             </div>
-            <div class="from_to_date">
-                <label>Select to Date</label><br>
-                <input type="date" name="to_date" id="to_date"><br>
-            </div>
-            <button type="submit" name="search_date" id="search_date" onclick="searchCheckIns()">Search <i class="fas fa-search"></i></button>
-</section>
+            
+        </section>
     </div>
-<div class="displays allResults new_data" id="check_in_report">
-    <h2>Check in Report for today</h2>
+<div class="displays allResults new_data" id="room_report">
+    <h2>Reports by room</h2>
     <hr>
     <div class="search">
         <input type="search" id="searchCheckout" placeholder="Enter keyword" onkeyup="searchData(this.value)">

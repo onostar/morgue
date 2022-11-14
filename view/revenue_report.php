@@ -5,7 +5,7 @@
 
 
 ?>
-<div id="checkReport" class="displays management">
+<div id="revenueReport" class="displays management">
     <div class="select_date">
         <!-- <form method="POST"> -->
         <section>    
@@ -17,24 +17,25 @@
                 <label>Select to Date</label><br>
                 <input type="date" name="to_date" id="to_date"><br>
             </div>
-            <button type="submit" name="search_date" id="search_date" onclick="searchCheckIns()">Search <i class="fas fa-search"></i></button>
+            <button type="submit" name="search_date" id="search_date" onclick="searchRevenue()">Search <i class="fas fa-search"></i></button>
 </section>
     </div>
-<div class="displays allResults new_data" id="check_in_report">
-    <h2>Check in Report for today</h2>
+<div class="displays allResults new_data" id="revenue_report">
+    <h2>Revenue Report for today</h2>
     <hr>
     <div class="search">
         <input type="search" id="searchCheckout" placeholder="Enter keyword" onkeyup="searchData(this.value)">
     </div>
-    <table id="check_out_table" class="searchTable">
+    <table id="revenue_table" class="searchTable">
         <thead>
-            <tr style="background:var(--moreColor)">
+            <tr style="background:var(--primaryColor)">
                 <td>S/N</td>
-                <td>Full Name</td>
-                <td>Room Category</td>
-                <td>Room</td>
-                <td>Checked In</td>
-                <td>Checked in by</td>
+                <td>Invoice</td>
+                <td>Guest</td>
+                <td>Item</td>
+                <td>Amount</td>
+                <td>Post Time</td>
+                <td>Collectd by</td>
                 
             </tr>
         </thead>
@@ -42,34 +43,32 @@
             <?php
                 $n = 1;
                 $get_users = new selects();
-                $details = $get_users->fetch_checkIn('check_ins', 'status', 'check_in_date', 1);
+                $details = $get_users->fetch_details_curdate('payments', 'post_date');
                 if(gettype($details) === 'array'){
                 foreach($details as $detail):
             ?>
             <tr>
                 <td style="text-align:center; color:red;"><?php echo $n?></td>
-                <td><a style="color:green" href="javascript:void(0)" title="View guest details" onclick="showPage('guest_details.php?guest_id=<?php echo $detail->guest_id?>')"><?php echo $detail->last_name . " ". $detail->first_name;?></a></td>
+                <td><a style="color:green" href="javascript:void(0)" title="View payment details" onclick="showPage('invoice_details.php?payment_id=<?php echo $detail->payment_id?>')"><?php echo $detail->invoice?></a></td>
                 <td>
-                    <?php 
-                        $get_cat = new selects();
-                        $categories = $get_cat->fetch_details_group('rooms', 'category', 'room_id', $detail->room);
-                        $category_id = $categories->category;
-                        //get category name
-                        $get_cat_name = new selects();
-                        $cat_name = $get_cat_name->fetch_details_group('categories', 'category', 'category_id', $category_id);
-                        echo $cat_name->category;
-
-
+                    <?php
+                        $get_guest = new selects();
+                        $rows = $get_guest->fetch_details_cond('check_ins', 'guest_id', $detail->guest);
+                        foreach($rows as $row){
+                            $full_name = $row->first_name . " ".$row->last_name;
+                        }
+                        echo $full_name;
                     ?>
                 </td>
                 <td>
                     <?php 
-                        $get_room = new selects();
+                        /* $get_room = new selects();
                         $rooms = $get_room->fetch_details_group('rooms', 'room', 'room_id', $detail->room);
-                        echo $rooms->room;
+                        echo $rooms->room; */
                     ?>
                 </td>
-                <td><?php echo date("jS M, Y", strtotime($detail->check_in_date));?></td>
+                <td><?php echo "₦".number_format($detail->amount_paid, 2)?></td>
+                <td style="color:var(--moreColor)"><?php echo date("H:i:sa", strtotime($detail->post_date));?></td>
                 <td>
                     <?php
                         //get posted by
@@ -88,7 +87,15 @@
         if(gettype($details) == "string"){
             echo "<p class='no_result'>'$details'</p>";
         }
+
+        // get sum
+        $get_total = new selects();
+        $amounts = $get_total->fetch_sum_curdate('payments', 'amount_paid', 'post_date');
+        foreach($amounts as $amount){
+            echo "<p class='total_amount'>Total: ₦".number_format($amount->total, 2)."</p>";
+        }
     ?>
+
 </div>
 
 <script src="../jquery.js"></script>

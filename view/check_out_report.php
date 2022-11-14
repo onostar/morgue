@@ -5,7 +5,7 @@
 
 
 ?>
-<div id="checkReport" class="displays management">
+<div id="revenueReport" class="displays management">
     <div class="select_date">
         <!-- <form method="POST"> -->
         <section>    
@@ -17,11 +17,11 @@
                 <label>Select to Date</label><br>
                 <input type="date" name="to_date" id="to_date"><br>
             </div>
-            <button type="submit" name="search_date" id="search_date" onclick="searchCheckIns()">Search <i class="fas fa-search"></i></button>
+            <button type="submit" name="search_date" id="search_date" onclick="searchCheckOuts()">Search <i class="fas fa-search"></i></button>
 </section>
     </div>
 <div class="displays allResults new_data" id="check_in_report">
-    <h2>Check in Report for today</h2>
+    <h2>Check out Report for today</h2>
     <hr>
     <div class="search">
         <input type="search" id="searchCheckout" placeholder="Enter keyword" onkeyup="searchData(this.value)">
@@ -33,8 +33,8 @@
                 <td>Full Name</td>
                 <td>Room Category</td>
                 <td>Room</td>
-                <td>Checked In</td>
-                <td>Checked in by</td>
+                <td>Checked out</td>
+                <td>Checked out by</td>
                 
             </tr>
         </thead>
@@ -42,7 +42,7 @@
             <?php
                 $n = 1;
                 $get_users = new selects();
-                $details = $get_users->fetch_checkIn('check_ins', 'status', 'check_in_date', 1);
+                $details = $get_users->fetch_checkIn('check_ins', 'status', 'checked_out', 2);
                 if(gettype($details) === 'array'){
                 foreach($details as $detail):
             ?>
@@ -74,7 +74,7 @@
                     <?php
                         //get posted by
                         $get_posted_by = new selects();
-                        $checkedin_by = $get_posted_by->fetch_details_group('users', 'full_name', 'user_id', $detail->posted_by);
+                        $checkedin_by = $get_posted_by->fetch_details_group('users', 'full_name', 'user_id', $detail->checked_out_by);
                         echo $checkedin_by->full_name;
                     ?>
                 </td>

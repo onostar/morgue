@@ -46,7 +46,18 @@
                     <li><a href="javascript:void(0);" title="List of rooms" class="page_navs" onclick="showPage('room_list.php')"><i class="fas fa-list-check"></i> Room List</a></li>
                     <li><a href="javascript:void(0);" title="List of rooms" class="page_navs" onclick="showPage('Bank_list.php')"><i class="fas fa-bank"></i> Bank List</a></li>
                     <li><a href="javascript:void(0);" title="List of rooms" class="page_navs" onclick="showPage('guest_list.php')"><i class="fas fa-users"></i> Current guest List</a></li>
-                    <li><a href="javascript:void(0);" title="List of rooms" class="page_navs" onclick="showPage('checkin_report.php')"><i class="fas fa-gauge"></i> Check in report</a></li>
+                    <li><a href="javascript:void(0);" title="Check in report" class="page_navs" onclick="showPage('checkin_report.php')"><i class="fas fa-gauge"></i> Check in report</a></li>
+                    <li><a href="javascript:void(0);" title="Guest check out report" class="page_navs" onclick="showPage('check_out_report.php')"><i class="fas fa-door-open"></i> Check out report</a></li>
+                    <li><a href="javascript:void(0);" title="Report on rooms" class="page_navs" onclick="showPage('room_reports.php')"><i class="fas fa-home"></i> Room reports</a></li>
+                </ul>
+            </li>
+            <li><a href="javascript:void(0);" class="allMenus" title="Financial Reports" data-menu="financial_reports"><span><i class="fas fa-gem"></i> Financial Reports </span><span class="second_icon"><i class="fas fa-chevron-down more_option"></i></span></a>
+                <ul class="subMenu" id="financial_reports">
+                    <li><a href="javascript:void(0);" title="Revenue report" class="page_navs" onclick="showPage('revenue_report.php')"><i class="fas fa-coins"></i> Revenue report</a></li>
+                    <li><a href="javascript:void(0);" title="Cash list report" class="page_navs" onclick="showPage('cash_list.php')"><i class="fas fa-money-check"></i> Cash Revenue list</a></li>
+                    <li><a href="javascript:void(0);" title="Transfer list report" class="page_navs" onclick="showPage('pos_list.php')"><i class="fas fa-money-check"></i> Pos Revenue list</a></li>
+                    <li><a href="javascript:void(0);" title="Transfer list report" class="page_navs" onclick="showPage('transfer_list.php')"><i class="fas fa-wifi"></i> Transfer Revenue list</a></li>
+                    
                 </ul>
             </li>
         </ul>
