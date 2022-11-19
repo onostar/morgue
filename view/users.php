@@ -65,6 +65,34 @@
             <?php include "side_menu.php"?>
             <!-- main contents -->
             <section id="contents">
+                <!-- quick links -->
+                <div id="quickLinks">
+                    <div class="quick_links">
+                        <div class="links page_navs" onclick="showPage('check_in.php')" title="Check in Guest">
+                            <i class="fas fa-pen-alt"></i>
+                            <p>Check in</p>
+                        </div>
+                        <div class="links page_navs" onclick="showPage('guest_payment.php')" title="New Guest payment">
+                            <i class="fas fa-hand-holding-dollar"></i>
+                            <p>New Guest Payment</p>
+                        </div>
+                        <div class="links page_navs" onclick="showPage('other_payment.php')" title="Post other payments">
+                            <i class="fas fa-money-check"></i>
+                            <p>Other Payments</p>
+                        </div>
+                        <div class="links page_navs" onclick="showPage('other_payment.php')" title="Check out guest">
+                            <i class="fas fa-door-open"></i>
+                            <p>Check out guest</p>
+                        </div>
+                        <div class="links page_navs" onclick="showPage('cancel_checkin.php')" title="Cancel guest checkin">
+                            <i class="fas fa-power-off"></i>
+                            <p>Cancel checkin</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick_links">
+
+                </div>
                 <div class="contents">
 
                     <?php

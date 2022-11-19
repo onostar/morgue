@@ -2,9 +2,8 @@
 <div id="dashboard">
     <div class="cards" id="card4">
         <a href="javascript:void(0)" class="page_navs" onclick="showPage('guest_list.php')">
-            <p>Current Guests</p>
             <div class="infos">
-                <i class="fas fa-users"></i>
+                <p><i class="fas fa-users"></i> Current Guests</p>
                 <p>
                 <?php
                     $get_guest = new selects();
@@ -17,9 +16,8 @@
     </div> 
     <div class="cards" id="card2">
         <a href="javascript:void(0)" class="page_navs" onclick="showPage('room_list.php')">
-            <p>Available rooms</p>
             <div class="infos">
-                <i class="fas fa-house"></i>
+                <p><i class="fas fa-house"></i> Available rooms</p>
                 <p>
                 <?php
                     $get_room = new selects();
@@ -32,9 +30,8 @@
     </div> 
     <div class="cards" id="card3">
         <a href="javascript:void(0)" onclick="showPage('revenue_report.php')">
-            <p>Today's Revenue</p>
             <div class="infos">
-            <i class="fas fa-coins"></i>
+                <p><i class="fas fa-coins"></i> Today's Revenue</p>
                 <p>
                 <?php
                     $get_sales = new selects();
@@ -47,7 +44,7 @@
             </div>
         </a>
     </div> 
-    <div class="cards" id="card5">
+    <!-- <div class="cards" id="card5">
         <a href="javascript:void(0)" onclick="showPage('checkin_report.php')">
             <p>Checked in today</p>
             <div class="infos">
@@ -61,7 +58,7 @@
                 </p>
             </div>
         </a>
-    </div> 
+    </div> --> 
     
     
 </div>
@@ -140,7 +137,7 @@
     <div class="daily_monthly">
         <!-- daily revenue summary -->
         <div class="daily_report allResults">
-            <h3>Daily Checkins</h3>
+            <h3>Daily Check ins</h3>
             <table>
                 <thead>
                     <tr>
@@ -176,7 +173,7 @@
         </div>
         <!-- monthly revenue summary -->
         <div class="monthly_report allResults">
-            <h3>Monthly Reports</h3>
+            <h3>Monthly Check ins</h3>
             <table>
                 <thead>
                     <tr>
@@ -198,7 +195,7 @@
                         <td><?php echo $n?></td>
                         <td><?php echo date("M, Y", strtotime($monthly->check_in_date))?></td>
                         <td style="text-align:center"><?php echo $monthly->customers?></td>
-                        <td><?php
+                        <td style="text-align:center"><?php
                             $average = $monthly->arrivals/$monthly->daily_average;
                             echo intVal($average);
                         ?></td>

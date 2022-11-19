@@ -7,7 +7,7 @@
             <div class="inputs">
                 <input type="text" name="full_name" id="full_name" placeholder="Enter full name" required>
                 <input type="text" name="username" id="username" placeholder="Enter username" required>
-                <select name="user_role" id="user_role" required>
+                <select name="user_role" id="user_role" required style="padding:10px;">
                     <option value="" selected>Select user role</option>
                     <option value="Admin">Admin</option>
                     <option value="cashier">Cashier</option>

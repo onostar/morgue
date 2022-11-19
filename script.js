@@ -41,6 +41,7 @@ function showMenu(menu){
           subMenu.style.display = "none";
      });
      $(`#${menu}`).toggle();
+     
 }
 document.addEventListener("DOMContentLoaded", function(){
      document.querySelectorAll(".allMenus").forEach(menus =>{

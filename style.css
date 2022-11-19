@@ -1298,47 +1298,54 @@ main hr{
 }
 /* quick links */
 #quickLinks{
-    display:none;
+    width:90%;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:0 auto!important;
 }
 .quick_links{
     /* display:none; */
-    width:97%;
+    width:50%;
     display:flex;
     flex-wrap:wrap; 
     margin:5px;
-    gap:.2rem;
-    margin:20px auto!important;
+    gap:.5rem;
+    margin:10px 0;
 }
 .quick_links .links{
-    width:24%;
-    min-height:70px;
+    width:50px;
+    min-height:50px;
     display:flex;
     text-align: center;
     flex-direction: column;
     align-items: center;
     gap:.2rem;
     justify-content: center;
-    background:#252424;
+    background:#fff;
     transition:.3s all ease-in-out;
     cursor: pointer;
+    box-shadow: 2px 2px 2px #c4c4c4
 }
 .quick_links .links:hover, .quick_links .links:focus{
     transform:scale(1.02);
 }
 .quick_links .links i{
-    color:var(--secondaryColor);
-    font-size:.9rem;
+    color:var(--moreColor);
+    font-size:1.5rem;
 }
 .quick_links .links p{
-    color:#fff;
+    display:none;
+    color:var(--primaryColor);
     font-size:.8rem;
     text-transform: capitalize;
 }
+
 #dashboard{
     display:flex;
     flex-wrap:wrap;
     justify-content: space-around;
-    margin:20px auto;
+    margin:10px auto 20px!important;
     width:90%;
     gap:2rem;
 
@@ -1348,8 +1355,8 @@ main hr{
     justify-content: space-around;
     margin:40px auto 10px;
     flex-wrap:wrap;
-    width:95%;
-    gap:2rem;
+    width:90%;
+    gap:1rem;
 }
 #dashboard #userSummary{
     min-height:300px;
@@ -1389,8 +1396,8 @@ main hr{
     gap:0;
 }
 #dashboard .cards{
-    min-width:230px;
-    height:120px;
+    min-width:270px;
+    height:100px;
     margin: 0;
     box-shadow:2px 2px 2px 2px #c4c4c4;
     border-radius:4px;
@@ -1404,18 +1411,30 @@ main hr{
 }
 #dashboard .cards a{
     color:#fff;
+    height:100%;
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 #dashboard .cards p{
-    font-size:1.1rem;
-    text-align:center;
+    font-size:1rem;
+    /* text-align:center; */
     text-transform: uppercase;
 }
+#dashboard .cards p:nth-child(2){
+    font-size: 1.2rem;
+}
 #dashboard .cards .infos{
-    margin-top:20px;
+    /* margin-top:20px; */
     display:flex;
     align-items: center;
     justify-content:space-between;
-    font-size:2rem;
+    gap:1.4rem;
+}
+.cards .infos i{
+    font-size:1.5rem;
 }
 #dashboard #card1{
     background:linear-gradient(45deg, hsla(120, 100%, 50%, 0.7), hsla(120, 100%, 25%, 0.8));
@@ -1447,7 +1466,7 @@ main hr{
     border-radius: 5px;
     margin:0;
     font-family: "Pacifico";
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 .options{
     display:flex;
