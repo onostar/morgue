@@ -79,7 +79,7 @@ function showPage(page){
      if(xhr){
           xhr.onreadystatechange = function(){
                if(xhr.readyState == 4 && xhr.status == 200){
-                    document.getElementById("contents").innerHTML = xhr.responseText;
+                    document.querySelector(".contents").innerHTML = xhr.responseText;
                }
           }
           xhr.open("GET", page, true );
@@ -307,7 +307,9 @@ function checkIn(){
      let check_in_date = document.getElementById("check_in_date").value;
      let check_out_date = document.getElementById("check_out_date").value;
      let amount_due = document.getElementById("amount_due").value;
-     let today = new Date();
+     let todayDate = new Date();
+     let today = todayDate.toLocaleDateString();
+     // alert(today);
      if(check_in_category.length == 0 || check_in_category.replace(/^\s+|\s+$/g, "").length == 0){
           alert("Please select room category!");
           $("#check_in_category").focus();
@@ -360,7 +362,7 @@ function checkIn(){
           alert("Please Input Check out date");
           $("#check_out_date").focus();
           return;
-     }else if((new Date(check_in_date)).getTime() < today.getTime()){
+     }else if(new Date(today).getTime() > new Date(check_in_date).getTime()){
           alert("Check in date cannot be lesser than todays date");
           $("#check_in_date").focus();
           return;
@@ -539,7 +541,7 @@ function postOtherCash(){
      }else{
      $.ajax({
           type : "POST",
-          url : "../controller/post_payments.php",
+          url : "../controller/post_other_payments.php",
           data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
           success : function(response){
                $("#guest_details").html(response);
@@ -573,7 +575,7 @@ function postOtherPos(){
      }else{
      $.ajax({
           type : "POST",
-          url : "../controller/post_payments.php",
+          url : "../controller/post_other_payments.php",
           data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
           success : function(response){
                $("#guest_details").html(response);
@@ -611,7 +613,7 @@ function postOtherTransfer(){
      }else{
      $.ajax({
           type : "POST",
-          url : "../controller/post_payments.php",
+          url : "../controller/post_other_payments.php",
           data : {posted_by:posted_by, guest:guest, payment_mode:payment_mode, bank_paid:bank_paid, sender:sender, guest_amount:guest_amount, amount_paid:amount_paid},
           success : function(response){
                $("#guest_details").html(response);
@@ -641,7 +643,7 @@ function checkOut(){
                }
           })
           setTimeout(function(){
-               $("#guest_details").load("guest_details.php?guest_id="+guest_id+" #guest_details");
+               $("#guest_details").load("guest_details.php?guest_id="+guest_id+ "#guest_details");
           }, 3000);
      }
      return false;

@@ -30,7 +30,7 @@
             <?php
                 $n = 1;
                 $get_users = new selects();
-                $details = $get_users->fetch_details_negCond('check_ins', 'amount_due', 0);
+                $details = $get_users->fetch_details_negCond('check_ins', 'amount_due', 0, 'status', 1);
                 if(gettype($details) === 'array'){
                 foreach($details as $detail):
             ?>

@@ -28,6 +28,49 @@
                 return $rows;
             }
         }
+        //fetch details count without condition
+        public function fetch_count($table){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table");
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                return $get_user->rowCount();
+            }else{
+                
+                return "0";
+            }
+        }
+        //fetch details count with condition
+        public function fetch_count_cond($table, $column, $condition){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $column = :$column");
+            $get_user->bindValue("$column", $condition);
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                return $get_user->rowCount();
+            }else{
+                return "0";
+            }
+        }
+        //fetch details count with condition and curdate
+        public function fetch_count_curDate($table, $column){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE date($column) = CURDATE()");
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                return $get_user->rowCount();
+            }else{
+                return "0";
+            }
+        }
+        // select count with date and negative condition
+        public function fetch_count_curDateCon($table, $column, $condition, $value){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE date($column) = CURDATE() AND $condition != :$condition");
+            $get_user->bindValue("$condition", $value);
+            $get_user->execute();
+            if($get_user->rowCount() > 0){
+                return $get_user->rowCount();
+            }else{
+                return "0";
+            }
+        }
         //fetch with two condition
         public function fetch_details_2cond($table, $condition1, $condition2, $value1, $value2){
             $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND $condition2 = :$condition2");
@@ -144,9 +187,10 @@
             }
         }
         //fetch details with negative condition
-        public function fetch_details_negCond($table, $column, $condition){
-            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $column != :$column");
-            $get_user->bindValue("$column", $condition);
+        public function fetch_details_negCond($table, $column1, $value1, $column2, $value2){
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $column1 != :$column1 AND $column2 = :$column2");
+            $get_user->bindValue("$column1", $value1);
+            $get_user->bindValue("$column2", $value2);
             $get_user->execute();
             if($get_user->rowCount() > 0){
                 $rows = $get_user->fetchAll();
@@ -158,7 +202,7 @@
         }
         //fetch details with date condition
         public function fetch_details_dateCond($table, $condition1, $value1){
-            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND check_out_date = CURDATE() OR check_out_date < CURDATE()");
+            $get_user = $this->connectdb()->prepare("SELECT * FROM $table WHERE $condition1 = :$condition1 AND date(check_out_date) = CURDATE()");
             $get_user->bindValue("$condition1", $value1);
             // $get_user->bindValue("$condition2", $value2);
             $get_user->execute();
@@ -192,6 +236,32 @@
             if($get_user->rowCount() > 0){
                 $row = $get_user->fetch();
                 return $row;
+            }else{
+                $rows = "No records found";
+                return $rows;
+            }
+        }
+        // fetch daily checkins
+        public function fetch_daily_checkins(){
+            $get_daily = $this->connectdb()->prepare("SELECT COUNT(distinct check_ins.guest_id) AS customers, SUM(payments.amount_paid) AS revenue, check_ins.check_in_date FROM check_ins, payments WHERE date(payments.post_date) = date(check_ins.check_in_date) AND check_ins.guest_id = payments.guest GROUP BY check_ins.check_in_date ORDER BY check_ins.check_in_date DESC");
+            $get_daily->execute();
+            if($get_daily->rowCount() > 0){
+                $rows = $get_daily->fetchAll();
+                return $rows;
+
+            }else{
+                $rows = "No records found";
+                return $rows;
+            }
+        }
+        //fetch monthly check ins
+        public function fetch_monthly_checkins(){
+            $get_monthly = $this->connectdb()->prepare("SELECT COUNT(guest_id) AS customers, check_in_date, COUNT(check_in_date) AS arrivals, COUNT(DISTINCT check_in_date) AS daily_average FROM check_ins WHERE status != 0 GROUP BY MONTH(check_in_date) ORDER BY check_in_date DESC");
+            $get_monthly->execute();
+            if($get_monthly->rowCount() > 0){
+                $rows = $get_monthly->fetchAll();
+                return $rows;
+
             }else{
                 $rows = "No records found";
                 return $rows;

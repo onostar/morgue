@@ -16,19 +16,10 @@
     //instantiate classes
     include "../classes/dbh.php";
     include "../classes/inserts.php";
-    include "../classes/select.php";
-    include "../classes/update.php";
     $post_payment = new payments($posted_by, $guest, $mode, $bank, $sender, $amount_due, $amount_paid, $invoice);
 
     $post_payment->payment();
     if($post_payment){
-        //get room
-        $get_room = new selects();
-        $rows = $get_room->fetch_details_group('check_ins', 'room', 'guest_id', $guest);
-        $room = $rows->room;
-        //update room
-        $update_room = new Update_table();
-        $update_room->update('rooms', 'room_status', 'room_id', 2, $room);
         echo "<div class='success'><p>Payment posted successfully! <i class='fas fa-thumbs-up'></i></p></div>";
     }
     

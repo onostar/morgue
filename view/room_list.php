@@ -53,6 +53,8 @@
                     <?php
                         if($detail->room_status == 0){
                             echo "<span style='color:green'>Available <i class='fas fa-check'></i></span>";
+                        }else if($detail->room_status == 1){
+                            echo "<span style='color:var(--moreColor)'>Booked <i class='fas fa-spinner'></i></span>";
                         }else{
                             echo "<span style='color:red'>Occupied <i class='fas fa-ban'></i></span>";
                         }

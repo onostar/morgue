@@ -20,6 +20,11 @@
     //instantiate classes
     include "../classes/dbh.php";
     include "../classes/inserts.php";
+    include "../classes/update.php";
     $check_in = new check_in($posted, $room, $last_name, $first_name, $age, $gender, $contact_person, $contact_phone, $contact_address, $relationship, $cause, $amount, $check_in_date, $check_out_date);
 
     $check_in->check_in();
+    if($check_in){
+        $update_room = new Update_table();
+        $update_room->update('rooms', 'room_status', 'room_id', 1, $room);
+    }

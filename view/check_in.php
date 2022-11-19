@@ -110,7 +110,7 @@
             </div>
             <div class="inputs">
                 <div class="data">
-                    <label for="amount_due" style="color:red" >Amount due(NGN): </label>
+                    <label for='amount_due' style='color:red' >Amount due(NGN): </label>
                     <div id="amount">
 
                     </div>

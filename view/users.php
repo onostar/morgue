@@ -65,22 +65,27 @@
             <?php include "side_menu.php"?>
             <!-- main contents -->
             <section id="contents">
-                <?php
-                    if(isset($_SESSION['success'])){
-                        echo "<div class='success'>".
-                            $_SESSION['success'].
-                        "</div>";
-                        unset($_SESSION['success']);
-                    }
-                ?>
-                <?php
-                    if(isset($_SESSION['error'])){
-                        echo "<div class='error'>".
-                            $_SESSION['error'].
-                        "</div>";
-                        unset($_SESSION['error']);
-                    }
-                ?>
+                <div class="contents">
+
+                    <?php
+                        if(isset($_SESSION['success'])){
+                            echo "<div class='success'>".
+                                $_SESSION['success'].
+                            "</div>";
+                            unset($_SESSION['success']);
+                        }
+                    ?>
+                    <?php
+                        if(isset($_SESSION['error'])){
+                            echo "<div class='error'>".
+                                $_SESSION['error'].
+                            "</div>";
+                            unset($_SESSION['error']);
+                        }
+                    ?>
+                    <!-- dashboard -->
+                    <?php include "dashboard.php"?>
+                </div>
             </section>
         </div>
     </main>
@@ -96,6 +101,9 @@
             setTimeout(function(){
                 $(".error").hide();
             }, 4000);
+
+            /* let today = new Date();
+            alert(today.toLocaleDateString()); */
     </script>
 </body>
 </html>

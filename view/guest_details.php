@@ -18,7 +18,6 @@
 ?>
 
 
-
 <div class="displays all_details">
     <!-- <div class="info"></div> -->
     <button class="page_navs" id="back" onclick="showPage('cancel_checkin.php')"><i class="fas fa-angle-double-left"></i> Back</button>

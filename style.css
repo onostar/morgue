@@ -1293,7 +1293,7 @@ main hr{
 }
 #contents{
     margin-left:18vw;
-    width:80vw;
+    width:85vw;
     margin-top:0;
 }
 /* quick links */
@@ -1348,7 +1348,7 @@ main hr{
     justify-content: space-around;
     margin:40px auto 10px;
     flex-wrap:wrap;
-    width:90%;
+    width:95%;
     gap:2rem;
 }
 #dashboard #userSummary{
@@ -1384,13 +1384,14 @@ main hr{
 }
 #dashboard .card_sum{
     display:flex;
-    justify-content: space-between;
-    flex-wrap:wrap; 
+    /* justify-content: space-between; */
+    flex-wrap:wrap;
+    gap:0;
 }
 #dashboard .cards{
     min-width:230px;
     height:120px;
-    margin: 0 10px;
+    margin: 0;
     box-shadow:2px 2px 2px 2px #c4c4c4;
     border-radius:4px;
     padding:20px;
@@ -1433,6 +1434,20 @@ main hr{
 }
 #dashboard #card5{
     background:linear-gradient(45deg, hsla(202, 81%, 42%, .9),hsla(202, 81%, 22%, .9));
+}
+.check_out_due{
+    width:95%;
+    margin:40px auto;
+}
+.check_out_due h3{
+    width:100%;
+    color:#fff;
+    background:var(--moreColor);
+    padding: 5px;
+    border-radius: 5px;
+    margin:0;
+    font-family: "Pacifico";
+    font-size: 1.3rem;
 }
 .options{
     display:flex;

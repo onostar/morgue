@@ -98,15 +98,15 @@
                 $check_in->bindvalue("posted_by",$posted);
                 $check_in->execute();
                 if($check_in){
-                    // update room status
+                    /* // update room status
                     $update_room = $this->connectdb()->prepare("UPDATE rooms SET room_status = 1 WHERE room_id = :room_id");
                     $update_room->bindValue("room_status", $room);
                     $update_room->execute();
-                    if($update_room){
+                    if($update_room){ */
                         echo "<p><span>$last_name $first_name</span> Posted successfully</p>";
-                    }else{
+                    /* }else{
                         echo "<p><span>Room status not updated</p>";
-                    }
+                    } */
                 }else{
                     echo "<p><span>$last_name $first_name</span> could not check in</p>";
                 }
